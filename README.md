@@ -2,6 +2,8 @@
 
 > A custom Cypress command to wrap the remote debugger protocol low level command
 
+Read the blog post [When Can The Test Click](https://glebbahmutov.com/blog/when-can-the-test-click/)
+
 ## Install
 
 ## API
