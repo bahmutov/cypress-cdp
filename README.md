@@ -1,4 +1,4 @@
-# cypress-cdp
+# cypress-cdp [![ci](https://github.com/bahmutov/cypress-cdp/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/bahmutov/cypress-cdp/actions/workflows/ci.yml)
 
 > A custom Cypress command to wrap the remote debugger protocol low level command
 
