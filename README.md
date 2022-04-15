@@ -1,4 +1,4 @@
-# cypress-cdp
+# cypress-cdp ![cypress version](https://img.shields.io/badge/cypress-9.5.4-brightgreen)
 
 > A custom Cypress command to wrap the remote debugger protocol low level command
 
