@@ -13,7 +13,7 @@ Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2022
 - [presentations](https://slides.com/bahmutov)
 - [cypress.tips](https://cypress.tips)
 - [Cypress Tips & Tricks Newsletter](https://cypresstips.substack.com/)
-- [My Cypress courses](https://cypress.tips/courses)
+- [my Cypress courses](https://cypress.tips/courses)
 
 License: MIT - do anything with the code, but don't blame me if it does not work.
 

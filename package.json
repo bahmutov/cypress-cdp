@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A custom Cypress command to wrap the remote debugger protocol low level command",
   "main": "src",
+  "files": [
+    "src"
+  ],
   "scripts": {
     "test": "cypress run"
   },
