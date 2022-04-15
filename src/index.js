@@ -38,3 +38,68 @@ Cypress.Commands.add('CDP', (rdpCommand, params, options = {}) => {
     return value
   })
 })
+
+Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
+  const logOptions = {
+    name: 'hasEventListeners',
+    message: `checking element "${selector}"`,
+  }
+  let log
+  if (options.log !== false) {
+    log = Cypress.log(logOptions)
+  }
+
+  cy.get(selector, { log: false }).should(($el) => {
+    if ($el.length !== 1) {
+      throw new Error(`Need a single element with selector "${selector}`)
+    }
+  })
+
+  cy.CDP(
+    'Runtime.evaluate',
+    {
+      expression: 'frames[0].document.querySelector("' + selector + '")',
+    },
+    { log: false },
+  )
+    .should((v) => {
+      if (!v || !v.result || !v.result.objectId) {
+        throw new Error(`Cannot find element "${selector}"`)
+      }
+    })
+    .then((v) => {
+      const objectId = v.result.objectId
+      cy.CDP(
+        'DOMDebugger.getEventListeners',
+        {
+          objectId,
+          depth: -1,
+          pierce: true,
+        },
+        { log: false },
+      )
+        .should((v) => {
+          if (!v.listeners) {
+            throw new Error('No listeners')
+          }
+          if (!v.listeners.length) {
+            throw new Error('Zero listeners')
+          }
+          if (options.type) {
+            const filtered = v.listeners.filter((l) => l.type === options.type)
+            if (!filtered.length) {
+              throw new Error(`Zero listeners of type "${options.type}"`)
+            }
+          }
+        })
+        .then(({ listeners }) => {
+          if (options.log !== false) {
+            logOptions.consoleProps = () => {
+              return {
+                result: listeners,
+              }
+            }
+          }
+        })
+    })
+})

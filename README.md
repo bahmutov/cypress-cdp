@@ -2,6 +2,34 @@
 
 > A custom Cypress command to wrap the remote debugger protocol low level command
 
+## Install
+
+## API
+
+### CDP
+
+#### CDP example 1
+
+```js
+const selector = 'button#one'
+cy.CDP('Runtime.evaluate', {
+  expression: 'frames[0].document.querySelector("' + selector + '")',
+}).should((v) => {
+  expect(v.result).to.have.property('objectId')
+})
+```
+
+### hasEventListeners
+
+#### hasEventListeners example
+
+```js
+// any event listeners are attached
+cy.hasEventListeners('button#one')
+// "click" event listeners are attached
+cy.hasEventListeners('button#one', { type: 'click' })
+```
+
 ## Small print
 
 Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2022
