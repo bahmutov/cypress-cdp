@@ -55,10 +55,11 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
     }
   })
 
+  const escapedSelector = JSON.stringify(selector)
   cy.CDP(
     'Runtime.evaluate',
     {
-      expression: 'frames[0].document.querySelector("' + selector + '")',
+      expression: 'frames[0].document.querySelector(' + escapedSelector + ')',
     },
     { log: false },
   )

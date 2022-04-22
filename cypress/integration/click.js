@@ -47,3 +47,11 @@ it('uses hasEventListeners command', () => {
   // now we can click that button
   cy.get('button#one').click()
 })
+
+it('handles selectors with quotes', () => {
+  cy.visit('public/index.html')
+  const selector = '[aria-label="Click this button"]'
+  cy.hasEventListeners(selector)
+  // now we can click that button
+  cy.get(selector).click()
+})

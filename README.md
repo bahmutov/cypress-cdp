@@ -21,6 +21,15 @@ cy.CDP('Runtime.evaluate', {
 })
 ```
 
+**Tip:** be careful with selectors, you probably will need to escape them. For example, this library uses this escape
+
+```js
+const escapedSelector = JSON.stringify(selector)
+cy.CDP('Runtime.evaluate', {
+  expression: 'frames[0].document.querySelector(' + escapedSelector + ')',
+})
+```
+
 ### hasEventListeners
 
 #### hasEventListeners example
