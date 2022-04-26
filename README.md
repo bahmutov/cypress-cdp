@@ -2,7 +2,12 @@
 
 > A custom Cypress command to wrap the remote debugger protocol low level command
 
-Read the blog post [When Can The Test Click](https://glebbahmutov.com/blog/when-can-the-test-click/) and [Solve The First Click](https://glebbahmutov.com/blog/solve-the-first-click/).
+Read the blog posts:
+
+- [Cypress automation](https://glebbahmutov.com/blog/cypress-automation/)
+- [When Can The Test Click](https://glebbahmutov.com/blog/when-can-the-test-click/)
+- [Solve The First Click](https://glebbahmutov.com/blog/solve-the-first-click/)
+- [Rendered font](https://glebbahmutov.com/blog/rendered-font/)
 
 ## Install
 
