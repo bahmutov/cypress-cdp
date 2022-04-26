@@ -104,3 +104,34 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
         })
     })
 })
+
+Cypress.Commands.add('getCDPNodeId', (selector) => {
+  cy.CDP('CSS.enable')
+  cy.CDP('DOM.getDocument', {
+    depth: 50,
+    pierce: true,
+  }).then((doc) => {
+    // let's get the application iframe
+    cy.CDP('DOM.querySelector', {
+      nodeId: doc.root.nodeId,
+      selector: 'iframe.aut-iframe',
+    }).then((iframeQueryResult) => {
+      cy.CDP('DOM.describeNode', {
+        nodeId: iframeQueryResult.nodeId,
+      }).then((iframeDescription) => {
+        cy.CDP('DOM.resolveNode', {
+          backendNodeId: iframeDescription.node.contentDocument.backendNodeId,
+        }).then((contentDocRemoteObject) => {
+          cy.CDP('DOM.requestNode', {
+            objectId: contentDocRemoteObject.object.objectId,
+          }).then((contentDocNode) => {
+            cy.CDP('DOM.querySelector', {
+              nodeId: contentDocNode.nodeId,
+              selector,
+            }).its('nodeId')
+          })
+        })
+      })
+    })
+  })
+})

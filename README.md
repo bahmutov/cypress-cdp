@@ -41,6 +41,18 @@ cy.hasEventListeners('button#one')
 cy.hasEventListeners('button#one', { type: 'click' })
 ```
 
+### getCDPNodeId
+
+Returns the internal element's Node Id that can be used to query the run-time properties, for example the rendered font.
+
+```js
+cy.getCDPNodeId('body').then((nodeId) => {
+  cy.CDP('CSS.getPlatformFontsForNode', {
+    nodeId,
+  })
+})
+```
+
 ## Small print
 
 Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2022

@@ -2,7 +2,31 @@
 
 import '../../src'
 
+it('gets the declared font', () => {
+  cy.visit('/public/index.html')
+  cy.get('body').then(($body) => {
+    cy.window()
+      .invoke('getComputedStyle', $body[0])
+      .its('fontFamily')
+      .should('include', 'Satisfy')
+  })
+})
+
 it('gets the rendered font', () => {
+  cy.visit('/public/index.html')
+  cy.getCDPNodeId('body').then((nodeId) => {
+    console.log(nodeId)
+    cy.CDP('CSS.getPlatformFontsForNode', {
+      nodeId,
+    })
+      .its('fonts')
+      .should('have.length.greaterThan', 0)
+      .its('0.familyName')
+      .then(cy.log)
+  })
+})
+
+it.skip('gets the rendered font (internal)', () => {
   cy.visit('/public/index.html')
   cy.get('body').then(($body) => {
     cy.window()
@@ -31,11 +55,11 @@ it('gets the rendered font', () => {
       const nodeId = v.result.objectId
 
       // https://stackoverflow.com/questions/47911613/fetch-rendered-font-using-chrome-headless-browser
-      cy.CDP('Page.getFrameTree')
-        .then(console.log)
-        .its('frameTree.childFrames.0')
-        .then(console.log)
-      cy.CDP('DOM.enable')
+      // cy.CDP('Page.getFrameTree')
+      //   .then(console.log)
+      //   .its('frameTree.childFrames.0')
+      //   .then(console.log)
+      // cy.CDP('DOM.enable')
       cy.CDP('CSS.enable')
       cy.CDP('DOM.getDocument', {
         depth: 50,
