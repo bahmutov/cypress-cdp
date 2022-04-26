@@ -106,8 +106,8 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
 })
 
 Cypress.Commands.add('getCDPNodeId', (selector) => {
-  cy.CDP('CSS.enable')
   cy.CDP('DOM.enable')
+  cy.CDP('CSS.enable')
   cy.CDP('DOM.getDocument', {
     depth: 50,
     pierce: true,
