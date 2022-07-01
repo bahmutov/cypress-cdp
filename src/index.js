@@ -5,6 +5,18 @@ Cypress.Commands.add('CDP', (rdpCommand, params, options = {}) => {
     name: 'CDP',
     message: rdpCommand,
   }
+
+  if (rdpCommand === 'DOM.querySelector') {
+    logOptions.message += ' ' + params.selector
+  } else {
+    const limitN = 60
+    const paramsStringified = params ? JSON.stringify(params) : ''
+    logOptions.message +=
+      paramsStringified.length > limitN
+        ? ' ' + paramsStringified.slice(0, limitN) + '...'
+        : ' ' + paramsStringified
+  }
+
   let log
   if (options.log !== false) {
     log = Cypress.log(logOptions)
