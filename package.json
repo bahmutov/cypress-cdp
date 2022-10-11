@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/bahmutov/cypress-cdp#readme",
   "devDependencies": {
-    "cypress": "9.7.0",
+    "cypress": "10.10.0",
     "prettier": "2.7.1",
     "semantic-release": "19.0.4"
   }
