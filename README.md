@@ -11,6 +11,22 @@ Read the blog posts:
 
 ## Install
 
+Add this plugin as your dev dependency
+
+```
+# install using NPM
+$ npm i -D cypress-cdp
+# or install using Yarn
+$ yarn add -D cypress-cdp
+```
+
+Then import this plugin in your spec or support file
+
+```js
+// https://github.com/bahmutov/cypress-cdp
+import 'cypress-cdp'
+```
+
 ## API
 
 ### CDP
