@@ -9,6 +9,8 @@ Read the blog posts:
 - [Solve The First Click](https://glebbahmutov.com/blog/solve-the-first-click/)
 - [Rendered font](https://glebbahmutov.com/blog/rendered-font/)
 
+🎓 Covered in my course [Cypress Plugins](https://cypress.tips/courses/cypress-plugins)
+
 ## Install
 
 Add this plugin as your dev dependency
