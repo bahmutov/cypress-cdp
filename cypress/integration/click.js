@@ -55,3 +55,11 @@ it('handles selectors with quotes', () => {
   // now we can click that button
   cy.get(selector).click()
 })
+
+it('handles jQuery selectors', () => {
+  cy.visit('public/index.html')
+  const selector = 'button:contains("Click me")'
+  cy.hasEventListeners(selector)
+  // now we can click that button
+  cy.get(selector).click()
+})

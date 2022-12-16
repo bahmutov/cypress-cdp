@@ -71,7 +71,7 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
   cy.CDP(
     'Runtime.evaluate',
     {
-      expression: 'frames[0].document.querySelector(' + escapedSelector + ')',
+      expression: 'Cypress.$(' + escapedSelector + ')[0]',
     },
     { log: false },
   )
