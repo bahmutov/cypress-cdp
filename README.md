@@ -9,7 +9,7 @@ Read the blog posts:
 - [Solve The First Click](https://glebbahmutov.com/blog/solve-the-first-click/)
 - [Rendered font](https://glebbahmutov.com/blog/rendered-font/)
 
-🎓 Covered in my course [Cypress Plugins](https://cypress.tips/courses/cypress-plugins)
+🎓 Covered in my course [Cypress Plugins](https://cypress.tips/courses/cypress-plugins) and [Cypress Network Testing Exercises](https://cypress.tips/courses/network-testing).
 
 ## Install
 
@@ -27,6 +27,19 @@ Then import this plugin in your spec or support file
 ```js
 // https://github.com/bahmutov/cypress-cdp
 import 'cypress-cdp'
+```
+
+## Examples
+
+### Disable caching
+
+Similar to clicking the checkbox "Disable cache" in the Network tab
+
+```js
+import 'cypress-cdp'
+cy.CDP('Network.setCacheDisabled', {
+  cacheDisabled: true,
+})
 ```
 
 ## API
