@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "test": "cypress run",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "badges": "npx -p dependency-version-badge update-badge cypress"
   },
   "repository": {
     "type": "git",
