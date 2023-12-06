@@ -1,14 +1,5 @@
 name: badges
 on:
-  push:
-    # update README badge only if the README file changes
-    # or if the package.json file changes, or this file changes
-    branches:
-      - main
-    paths:
-      - README.md
-      - package.json
-      - .github/workflows/badges.yml
   schedule:
     # update badges every night
     # because we have a few badges that are linked
@@ -21,10 +12,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Update version badges 🏷
-        run: npx -p dependency-version-badge update-badge cypress
+        run: npm run badges
 
       - name: Commit any changed files 💾
         uses: stefanzweifel/git-auto-commit-action@v4

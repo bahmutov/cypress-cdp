@@ -27,7 +27,7 @@ it('clicks on the button when there is an event handler', () => {
       expect(v.result).to.have.property('objectId')
     })
     .its('result.objectId')
-    .then(cy.log)
+    .should('be.a', 'string')
     .then((objectId) => {
       cy.CDP('DOMDebugger.getEventListeners', {
         objectId,
