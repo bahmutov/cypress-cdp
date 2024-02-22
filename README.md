@@ -8,6 +8,7 @@ Read the blog posts:
 - [When Can The Test Click](https://glebbahmutov.com/blog/when-can-the-test-click/)
 - [Solve The First Click](https://glebbahmutov.com/blog/solve-the-first-click/)
 - [Rendered font](https://glebbahmutov.com/blog/rendered-font/)
+- [Emulate Media In Cypress Tests](https://glebbahmutov.com/blog/cypress-emulate-media/)
 
 🎓 Covered in my course [Cypress Plugins](https://cypress.tips/courses/cypress-plugins) and [Cypress Network Testing Exercises](https://cypress.tips/courses/network-testing).
 
