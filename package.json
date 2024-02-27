@@ -6,6 +6,7 @@
   "files": [
     "src"
   ],
+  "types": "src/index.d.ts",
   "scripts": {
     "test": "cypress run",
     "semantic-release": "semantic-release",
@@ -28,5 +29,8 @@
     "cypress": "13.6.6",
     "prettier": "3.2.5",
     "semantic-release": "23.0.2"
+  },
+  "dependencies": {
+    "devtools-protocol": "^0.0.1263784"
   }
 }

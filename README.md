@@ -90,6 +90,16 @@ cy.getCDPNodeId('body').then((nodeId) => {
 })
 ```
 
+## Type definitions
+
+Defined in [src/index.d.ts](./src/index.d.ts) and copied from the original [PR 66237](https://github.com/DefinitelyTyped/DefinitelyTyped/pull/66237). If you want your project to "know" the `cy.CDP` command, include this dependency, for example:
+
+```json
+{
+  "types": ["cypress", "cypress-cdp"]
+}
+```
+
 ## Small print
 
 Author: Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2022

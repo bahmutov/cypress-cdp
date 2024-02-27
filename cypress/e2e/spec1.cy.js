@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+// @ts-check
 
 it('clicks on the button', () => {
   cy.visit('public/index.html')
