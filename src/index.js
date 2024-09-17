@@ -89,7 +89,10 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
           depth: -1,
           pierce: true,
         },
-        { log: false },
+        {
+          log: false,
+          timeout: options.timeout,
+        },
       )
         .should((v) => {
           if (!v.listeners) {
