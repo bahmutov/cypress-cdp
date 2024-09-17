@@ -1,3 +1,6 @@
 body {
   font-family: 'Satisfy', cursive;
+  div:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }

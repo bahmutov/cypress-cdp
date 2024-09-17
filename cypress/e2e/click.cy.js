@@ -49,6 +49,13 @@ it('uses hasEventListeners command', () => {
   cy.get('button#one').click()
 })
 
+it('uses hasEventListeners command with timeout option', () => {
+  cy.visit('public/index.html')
+  cy.hasEventListeners('button#two', { timeout: 10000 })
+  // now we can click that button
+  cy.get('button#two').click()
+})
+
 it('handles selectors with quotes', () => {
   cy.visit('public/index.html')
   const selector = '[aria-label="Click this button"]'
@@ -59,7 +66,7 @@ it('handles selectors with quotes', () => {
 
 it('handles jQuery selectors', () => {
   cy.visit('public/index.html')
-  const selector = 'button:contains("Click me")'
+  const selector = 'button:contains("Click me!")'
   cy.hasEventListeners(selector)
   // now we can click that button
   cy.get(selector).click()

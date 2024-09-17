@@ -40,8 +40,9 @@ declare global {
 
       //#region hasEventListeners
       interface hasEventListenersFnOptions {
-        log: LogConfig
-        type: string
+        log?: LogConfig
+        timeout?: number
+        type?: string
       }
       type hasEventListenersFn = (
         selector: string,
