@@ -1,4 +1,4 @@
-# cypress-cdp [![ci](https://github.com/bahmutov/cypress-cdp/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/bahmutov/cypress-cdp/actions/workflows/ci.yml) ![cypress version](https://img.shields.io/badge/cypress-13.14.2-brightgreen)
+# cypress-cdp [![ci](https://github.com/bahmutov/cypress-cdp/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/bahmutov/cypress-cdp/actions/workflows/ci.yml) ![cypress version](https://img.shields.io/badge/cypress-13.15.0-brightgreen)
 
 > A custom Cypress command to wrap the [Chrome remote debugger protocol](https://chromedevtools.github.io/devtools-protocol/) low level command
 
