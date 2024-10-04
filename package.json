@@ -31,6 +31,6 @@
     "semantic-release": "24.1.2"
   },
   "dependencies": {
-    "devtools-protocol": "^0.0.1362837"
+    "devtools-protocol": "^0.0.1363470"
   }
 }
