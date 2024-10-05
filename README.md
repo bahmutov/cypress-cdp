@@ -2,13 +2,14 @@
 
 > A custom Cypress command to wrap the [Chrome remote debugger protocol](https://chromedevtools.github.io/devtools-protocol/) low level command
 
-Read the blog posts:
+Read my blog posts that show this plugin in action:
 
 - [Cypress automation](https://glebbahmutov.com/blog/cypress-automation/)
 - [When Can The Test Click](https://glebbahmutov.com/blog/when-can-the-test-click/)
 - [Solve The First Click](https://glebbahmutov.com/blog/solve-the-first-click/)
 - [Rendered font](https://glebbahmutov.com/blog/rendered-font/)
 - [Emulate Media In Cypress Tests](https://glebbahmutov.com/blog/cypress-emulate-media/)
+- [Testing CSS Print Media Styles](https://glebbahmutov.com/blog/test-print-styles/)
 
 🎓 Covered in my course [Cypress Plugins](https://cypress.tips/courses/cypress-plugins) and [Cypress Network Testing Exercises](https://cypress.tips/courses/network-testing).
 
