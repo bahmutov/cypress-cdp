@@ -54,6 +54,15 @@ it('uses hasEventListeners command with timeout option', () => {
   cy.hasEventListeners('button#two', { timeout: 10000 })
   // now we can click that button
   cy.get('button#two').click()
+  cy.get('output#output-two').should('contain.text', 'clicked')
+})
+
+it('hasEventListeners command handles re-renders', () => {
+  cy.visit('public/index.html')
+  cy.hasEventListeners('button#three')
+  // now we can click that button
+  cy.get('button#three').click()
+  cy.get('output#output-three').should('contain.text', 'clicked')
 })
 
 it('handles selectors with quotes', () => {
