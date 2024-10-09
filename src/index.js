@@ -51,7 +51,27 @@ Cypress.Commands.add('CDP', (rdpCommand, params, options = {}) => {
   })
 })
 
+let eventListenerStatus // track most recent failure mode
+let eventListenerRun
+let maxTimeout
 Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
+  let retryOpts
+  if (options.timeout === 0) {
+    // is a retry
+    retryOpts = options
+  } else {
+    // set up the timer
+    eventListenerStatus = ''
+    let runId = Date.now()
+    eventListenerRun = runId // prevent failing the next test
+    maxTimeout = options.timeout ?? Cypress.config().defaultCommandTimeout
+    retryOpts = { ...options, timeout: 0, log: false }
+    setTimeout(() => {
+      if (eventListenerRun === runId && eventListenerStatus !== 'Passed') {
+        throw new Error(eventListenerStatus)
+      }
+    }, maxTimeout)
+  }
   const logOptions = {
     name: 'hasEventListeners',
     message: `checking element "${selector}"`,
@@ -61,7 +81,7 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
     log = Cypress.log(logOptions)
   }
 
-  cy.get(selector, { log: false }).should(($el) => {
+  cy.get(selector, { log: false, timeout: maxTimeout }).should(($el) => {
     if ($el.length !== 1) {
       throw new Error(`Need a single element with selector "${selector}`)
     }
@@ -73,7 +93,7 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
     {
       expression: 'Cypress.$(' + escapedSelector + ')[0]',
     },
-    { log: false },
+    { log: false, timeout: maxTimeout },
   )
     .should((v) => {
       if (!v || !v.result || !v.result.objectId) {
@@ -91,32 +111,35 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
         },
         {
           log: false,
-          timeout: options.timeout,
         },
-      )
-        .should((v) => {
-          if (!v.listeners) {
-            throw new Error('No listeners')
+      ).then((v) => {
+        if (!v.listeners) {
+          eventListenerStatus = 'No listeners'
+          cy.hasEventListeners(selector, retryOpts)
+          return
+        }
+        if (!v.listeners.length) {
+          eventListenerStatus = 'Zero listeners'
+          cy.hasEventListeners(selector, retryOpts)
+          return
+        }
+        if (options.type) {
+          const filtered = v.listeners.filter((l) => l.type === options.type)
+          if (!filtered.length) {
+            eventListenerStatus = `Zero listeners of type "${options.type}"`
+            cy.hasEventListeners(selector, retryOpts)
+            return
           }
-          if (!v.listeners.length) {
-            throw new Error('Zero listeners')
-          }
-          if (options.type) {
-            const filtered = v.listeners.filter((l) => l.type === options.type)
-            if (!filtered.length) {
-              throw new Error(`Zero listeners of type "${options.type}"`)
+        }
+        eventListenerStatus = 'Passed'
+        if (options.log !== false) {
+          logOptions.consoleProps = () => {
+            return {
+              result: v.listeners,
             }
           }
-        })
-        .then(({ listeners }) => {
-          if (options.log !== false) {
-            logOptions.consoleProps = () => {
-              return {
-                result: listeners,
-              }
-            }
-          }
-        })
+        }
+      })
     })
 })
 
