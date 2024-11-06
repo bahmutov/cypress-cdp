@@ -11,7 +11,12 @@ Read my blog posts that show this plugin in action:
 - [Emulate Media In Cypress Tests](https://glebbahmutov.com/blog/cypress-emulate-media/)
 - [Testing CSS Print Media Styles](https://glebbahmutov.com/blog/test-print-styles/)
 
-🎓 Covered in my course [Cypress Plugins](https://cypress.tips/courses/cypress-plugins) and [Cypress Network Testing Exercises](https://cypress.tips/courses/network-testing).
+🎓 Covered in my course [Cypress Plugins](https://cypress.tips/courses/cypress-plugins), [Cypress Network Testing Exercises](https://cypress.tips/courses/network-testing), and [TDD Calculator](https://cypress.tips/courses/tdd-calculator):
+- [Lesson e5: Print page as PDF](https://cypress.tips/courses/tdd-calculator/lessons/e5)
+- [Lesson c6: Exit fullscreen mode using cypress-cdp](https://cypress.tips/courses/cypress-plugins/lessons/c6)
+- [Lesson c7: Set custom timezone and locale](https://cypress.tips/courses/cypress-plugins/lessons/c7)
+- [Lesson c9: Disable network caching during the test](https://cypress.tips/courses/cypress-plugins/lessons/c9)
+- [Bonus 99: Confirm the form works with CSS styles disabled](https://cypress.tips/courses/network-testing/lessons/bonus99)
 
 ## Install
 
