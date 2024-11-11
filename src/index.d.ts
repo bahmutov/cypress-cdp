@@ -29,7 +29,7 @@ declare global {
       }
       type CdpCommandFn = <RdpCommandName extends RdpCommandNames>(
         rdpCommand: RdpCommandName,
-        params: CdpCommandFnParams<RdpCommandName>,
+        params?: CdpCommandFnParams<RdpCommandName>,
         options?: CdpCommandFnOptions,
       ) => Chainable<CdpCommandFnReturnType<RdpCommandName>>
       //#endregion
