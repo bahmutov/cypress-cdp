@@ -10,6 +10,8 @@ jobs:
       - name: Run tests 🧪
         # https://github.com/cypress-io/github-action
         uses: cypress-io/github-action@v6
+        with:
+          build: npm run lint
 
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v3
