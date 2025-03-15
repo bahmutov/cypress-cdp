@@ -33,6 +33,6 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "devtools-protocol": "^0.0.1431913"
+    "devtools-protocol": "^0.0.1432532"
   }
 }
