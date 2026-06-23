@@ -35,7 +35,13 @@ declare global {
       //#endregion
 
       //#region getCDPNodeId
-      type getCDPNodeIdFn = (selector: string) => Chainable<number>
+      interface getCDPNodeIdFnOptions {
+        log?: boolean
+      }
+      type getCDPNodeIdFn = (
+        selector: string,
+        options?: getCDPNodeIdFnOptions,
+      ) => Chainable<number>
       //#endregion
 
       //#region hasEventListeners
