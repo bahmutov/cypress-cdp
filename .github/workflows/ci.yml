@@ -14,7 +14,7 @@ jobs:
           build: npm run lint
 
       - name: Semantic Release 🚀
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@v6.0.0
         with:
           branch: main
         env:
