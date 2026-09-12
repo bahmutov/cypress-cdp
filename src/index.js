@@ -143,31 +143,33 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
     })
 })
 
-Cypress.Commands.add('getCDPNodeId', (selector) => {
-  cy.CDP('DOM.enable')
-  cy.CDP('CSS.enable')
+Cypress.Commands.add('getCDPNodeId', (selector, options) => {
+  const cdpOptions = options?.log === false ? { log: false } : undefined
+
+  cy.CDP('DOM.enable', undefined, cdpOptions)
+  cy.CDP('CSS.enable', undefined, cdpOptions)
   cy.CDP('DOM.getDocument', {
     depth: 50,
     pierce: true,
-  }).then((doc) => {
+  }, cdpOptions).then((doc) => {
     // let's get the application iframe
     cy.CDP('DOM.querySelector', {
       nodeId: doc.root.nodeId,
       selector: 'iframe.aut-iframe',
-    }).then((iframeQueryResult) => {
+    }, cdpOptions).then((iframeQueryResult) => {
       cy.CDP('DOM.describeNode', {
         nodeId: iframeQueryResult.nodeId,
-      }).then((iframeDescription) => {
+      }, cdpOptions).then((iframeDescription) => {
         cy.CDP('DOM.resolveNode', {
           backendNodeId: iframeDescription.node.contentDocument.backendNodeId,
-        }).then((contentDocRemoteObject) => {
+        }, cdpOptions).then((contentDocRemoteObject) => {
           cy.CDP('DOM.requestNode', {
             objectId: contentDocRemoteObject.object.objectId,
-          }).then((contentDocNode) => {
+          }, cdpOptions).then((contentDocNode) => {
             cy.CDP('DOM.querySelector', {
               nodeId: contentDocNode.nodeId,
               selector,
-            }).its('nodeId')
+            }, cdpOptions).its('nodeId')
           })
         })
       })
