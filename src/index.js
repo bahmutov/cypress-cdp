@@ -81,65 +81,68 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
     log = Cypress.log(logOptions)
   }
 
-  cy.get(selector, { log: false, timeout: maxTimeout }).should(($el) => {
-    if ($el.length !== 1) {
-      throw new Error(`Need a single element with selector "${selector}`)
-    }
-  })
-
-  const escapedSelector = JSON.stringify(selector)
-  cy.CDP(
-    'Runtime.evaluate',
-    {
-      expression: 'Cypress.$(' + escapedSelector + ')[0]',
-    },
-    { log: false, timeout: maxTimeout },
-  )
-    .should((v) => {
-      if (!v || !v.result || !v.result.objectId) {
-        throw new Error(`Cannot find element "${selector}"`)
-      }
+  cy.get(selector, { log: false, timeout: maxTimeout })
+    .should(($el) => {
+        if ($el.length !== 1) {
+          throw new Error(`Need a single element with selector "${selector}"`)
+        }
     })
-    .then((v) => {
-      const objectId = v.result.objectId
+    .then(($el) => {
+      const escapedSelector = JSON.stringify($el.selector)
+
       cy.CDP(
-        'DOMDebugger.getEventListeners',
+        'Runtime.evaluate',
         {
-          objectId,
-          depth: -1,
-          pierce: true,
+          expression: 'Cypress.$(' + escapedSelector + ')[0]',
         },
-        {
-          log: false,
-        },
-      ).then((v) => {
-        if (!v.listeners) {
-          eventListenerStatus = 'No listeners'
-          cy.hasEventListeners(selector, retryOpts)
-          return
-        }
-        if (!v.listeners.length) {
-          eventListenerStatus = 'Zero listeners'
-          cy.hasEventListeners(selector, retryOpts)
-          return
-        }
-        if (options.type) {
-          const filtered = v.listeners.filter((l) => l.type === options.type)
-          if (!filtered.length) {
-            eventListenerStatus = `Zero listeners of type "${options.type}"`
-            cy.hasEventListeners(selector, retryOpts)
-            return
+        { log: false, timeout: maxTimeout },
+      )
+        .should((v) => {
+          if (!v || !v.result || !v.result.objectId) {
+            throw new Error(`Cannot find element "${selector}"`)
           }
-        }
-        eventListenerStatus = 'Passed'
-        if (options.log !== false) {
-          logOptions.consoleProps = () => {
-            return {
-              result: v.listeners,
+        })
+        .then((v) => {
+          const objectId = v.result.objectId
+          cy.CDP(
+            'DOMDebugger.getEventListeners',
+            {
+              objectId,
+              depth: -1,
+              pierce: true,
+            },
+            {
+              log: false,
+            },
+          ).then((v) => {
+            if (!v.listeners) {
+              eventListenerStatus = 'No listeners'
+              cy.hasEventListeners(selector, retryOpts)
+              return
             }
-          }
-        }
-      })
+            if (!v.listeners.length) {
+              eventListenerStatus = 'Zero listeners'
+              cy.hasEventListeners(selector, retryOpts)
+              return
+            }
+            if (options.type) {
+              const filtered = v.listeners.filter((l) => l.type === options.type)
+              if (!filtered.length) {
+                eventListenerStatus = `Zero listeners of type "${options.type}"`
+                cy.hasEventListeners(selector, retryOpts)
+                return
+              }
+            }
+            eventListenerStatus = 'Passed'
+            if (options.log !== false) {
+              logOptions.consoleProps = () => {
+                return {
+                  result: v.listeners,
+                }
+              }
+            }
+          })
+        })
     })
 })
 
