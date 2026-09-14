@@ -1,26 +1,28 @@
 /// <reference types="cypress" />
 
-Cypress.Commands.add('CDP', (rdpCommand, params, options = {}) => {
-  const logOptions = {
-    name: 'CDP',
-    message: rdpCommand,
-  }
-
+const formatMessage = (rdpCommand, params) => {
   if (rdpCommand === 'DOM.querySelector') {
-    logOptions.message += ' ' + params.selector
-  } else {
-    const limitN = 60
-    const paramsStringified = params ? JSON.stringify(params) : ''
-    logOptions.message +=
-      paramsStringified.length > limitN
-        ? ' ' + paramsStringified.slice(0, limitN) + '...'
-        : ' ' + paramsStringified
+    return `${rdpCommand} ${params?.selector ?? ''}`
   }
 
-  let log
-  if (options.log !== false) {
-    log = Cypress.log(logOptions)
-  }
+  const limit = 60
+  const paramsStringified = params ? JSON.stringify(params) : ''
+
+  return paramsStringified.length > limit
+    ? `${rdpCommand} ${paramsStringified.slice(0, limit)}...`
+    : `${rdpCommand} ${paramsStringified}`
+}
+
+Cypress.Commands.add('CDP', (rdpCommand, params, options = {}) => {
+  const shouldLog = options.log !== false
+  const customLogOptions = typeof options.log === 'object' ? options.log : {}
+  const log = shouldLog
+    ? Cypress.log({
+        name: 'CDP',
+        message: formatMessage(rdpCommand, params),
+        ...customLogOptions,
+      })
+    : undefined
 
   const getValue = () => {
     return Cypress.automation('remote:debugger:protocol', {
@@ -38,12 +40,13 @@ Cypress.Commands.add('CDP', (rdpCommand, params, options = {}) => {
   }
 
   return resolveValue().then((value) => {
-    if (options.log !== false) {
-      logOptions.consoleProps = () => {
-        return {
+    if (log) {
+      log.set({
+        consoleProps: () => ({
           result: value,
-        }
-      }
+        }),
+      })
+
       log.snapshot().end()
     }
 
@@ -72,18 +75,18 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
       }
     }, maxTimeout)
   }
-  const logOptions = {
-    name: 'hasEventListeners',
-    message: `checking element "${selector}"`,
-  }
-  let log
-  if (options.log !== false) {
-    log = Cypress.log(logOptions)
-  }
+
+  const shouldLog = options.log !== false
+  const log = shouldLog
+    ? Cypress.log({
+        name: 'hasEventListeners',
+        message: `checking element "${selector}"`,
+      })
+    : undefined
 
   cy.get(selector, { log: false, timeout: maxTimeout }).should(($el) => {
     if ($el.length !== 1) {
-      throw new Error(`Need a single element with selector "${selector}`)
+      throw new Error(`Need a single element with selector "${selector}"`)
     }
   })
 
@@ -132,12 +135,15 @@ Cypress.Commands.add('hasEventListeners', (selector, options = {}) => {
           }
         }
         eventListenerStatus = 'Passed'
-        if (options.log !== false) {
-          logOptions.consoleProps = () => {
-            return {
+
+        if (log) {
+          log.set({
+            consoleProps: () => ({
               result: v.listeners,
-            }
-          }
+            }),
+          })
+
+          log.snapshot().end()
         }
       })
     })
