@@ -24,8 +24,10 @@ declare global {
           : RdpCommands[RdpCommandName]['paramsType'][number]
       type CdpCommandFnReturnType<RdpCommandName extends RdpCommandNames> =
         RdpCommands[RdpCommandName]['returnType']
+      type CommandLogOption = boolean | Partial<LogConfig>
       interface CdpCommandFnOptions {
-        log: LogConfig
+        log?: CommandLogOption
+        timeout?: number
       }
       type CdpCommandFn = <RdpCommandName extends RdpCommandNames>(
         rdpCommand: RdpCommandName,
@@ -40,7 +42,7 @@ declare global {
 
       //#region hasEventListeners
       interface hasEventListenersFnOptions {
-        log?: LogConfig
+        log?: CommandLogOption
         timeout?: number
         type?: string
       }
