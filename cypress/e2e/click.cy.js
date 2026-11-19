@@ -80,3 +80,12 @@ it('handles jQuery selectors', () => {
   // now we can click that button
   cy.get(selector).click()
 })
+
+it('handles aliases', () => {
+  cy.visit('public/index.html')
+  const selector = '[aria-label="Click this button"]'
+  cy.get(selector).as('button')
+  cy.hasEventListeners('@button')
+  // now we can click that button
+  cy.get('@button').click()
+})
